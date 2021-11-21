@@ -27,6 +27,7 @@ public:
         }
 
         for(auto it : mp){
+            if(it.second>0)
             if(mp1[it.first]>0 || mp2[it.first]>0){
                 v.push_back(it.first);
                 mp1.erase(it.first);
@@ -35,6 +36,7 @@ public:
         }
         
         for(auto it : mp1){
+            if(it.second>0)
             if(mp[it.first]>0 || mp2[it.first]>0){
                 v.push_back(it.first);
                 mp.erase(it.first);
@@ -43,6 +45,7 @@ public:
         }
         
         for(auto it : mp2){
+            if(it.second > 0)
             if(mp1[it.first]>0 || mp[it.first]>0){
                 v.push_back(it.first);
                 mp1.erase(it.first);
