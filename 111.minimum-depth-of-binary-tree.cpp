@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=112 lang=cpp
+ * @lc app=leetcode id=111 lang=cpp
  *
- * [112] Path Sum
+ * [111] Minimum Depth of Binary Tree
  */
 
 // @lc code=start
@@ -18,21 +18,14 @@
  */
 class Solution {
 public:
-    bool hasPathSum(TreeNode* root, int targetSum) {
+    int minDepth(TreeNode* root) {
         if(root == nullptr){
-            return false;
+            return 0;
         }
-        
-        if(root->left == nullptr && root->right == nullptr){
-            if(targetSum == root->val){
-                return true;
-            }
-            return false;
-        }
-
-        bool ans = hasPathSum(root->left,targetSum-root->val) || hasPathSum(root->right,targetSum-root->val);
-
-        return ans;
+        int left = minDepth(root->left);
+        int right = minDepth(root->right);
+        int hei = 1+(min(left,right)? min(left,right): max(left,right));
+        return hei;
     }
 };
 // @lc code=end

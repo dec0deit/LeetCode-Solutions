@@ -27,6 +27,7 @@ class Solution {
 public:
     Node* connect(Node* root) {
         
+        if(root == null)
     }
 };
 // @lc code=end
