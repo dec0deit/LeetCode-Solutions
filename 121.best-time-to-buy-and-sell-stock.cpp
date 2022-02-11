@@ -24,7 +24,7 @@ public:
         else{
             return dp[i][flag]=max(prices[i]+result(prices,i+1,2),result(prices,i+1,flag));
         }
-    }
+    }*--
     int maxProfit(vector<int>& prices) {
         dp = new int*[prices.size()+1];
         for(int i=0;i<prices.size();i++){

@@ -1,30 +1,33 @@
 class Solution {
 public:
-    int posIndex=-1;
-    int findIndex(vector<int>& inorder,int val,int str,int end){
-        for(int i=str;i<=end;i++){
-            if(val == inorder[i])
-                return i;
-        }
 
-        return -1;
-    }
-    TreeNode* buildTreeUtil(vector<int>& pos, vector<int>& inorder,int str,int end){
-        if(str>end){
-            return nullptr;
-        }
-        if(posIndex<0){
-            return nullptr;
-        }
-        int val = pos[posIndex];
-        int index=findIndex(inorder,pos[posIndex--],str,end);
-        TreeNode* temp = new TreeNode(val,buildTreeUtil(pos,inorder,str,index-1),buildTreeUtil(pos,inorder,index+1,end));
-        return temp;		
-    }
+     unordered_map<int, int> val2idx;
+    
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder, int is, int ie, int ps, int pe) {
+        if(is > ie || ps > pe) return nullptr;
+        
+        TreeNode* node = new TreeNode(postorder[pe]);
+        
+        int iroot = val2idx[postorder[pe]];
+        // cout << "inorder's root at: " << iroot << endl;
+        int leftSize = iroot-is;
+        
+        node->left = buildTree(inorder, postorder, is, iroot-1, ps, ps+leftSize-1);
+        node->right = buildTree(inorder, postorder, iroot+1, ie, ps+leftSize, pe-1);
+        
+        return node;
+    };
+    
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        posIndex = inorder.size()-1;
-        cout<<posIndex<<" ";
-        return buildTreeUtil(postorder,inorder,0,posIndex);     
+        int n = inorder.size();
+        
+        if(n == 0) return nullptr;
+        
+        for(int i = 0; i < n; ++i){
+            val2idx[inorder[i]] = i;
+        }
+        
+        return buildTree(inorder, postorder, 0, n-1, 0, n-1);
     }
 };
 // @lc code=end
