@@ -1,0 +1,9 @@
+
+
+admin/getMessages/:id
+
+admin/postMessages/:id
+
+student/getMessages/
+
+student/postMessages/
