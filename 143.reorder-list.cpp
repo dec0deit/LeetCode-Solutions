@@ -6,13 +6,13 @@
 
 // @lc code=start
 /**
- * Definition for singly-linked list.
- * struct ListNode {
+ * Definition for singly-linked list->
+ * struct ListNode* {
  *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ *     ListNode* *next;
+ *     ListNode*() : val(0), next(nullptr) {}
+ *     ListNode*(int x) : val(x), next(nullptr) {}
+ *     ListNode*(int x, ListNode* *next) : val(x), next(next) {}
  * };
  */
 class Solution {
@@ -22,7 +22,7 @@ public:
 
         ListNode* next = nullptr;
         ListNode* prev = nullptr;
-        ListNode * curr = head;
+        ListNode*  curr = head;
         while(curr != nullptr){
             next = curr->next;
             curr->next = prev;
@@ -33,37 +33,36 @@ public:
         return prev;
     }
     void reorderList(ListNode* head) {
-        if(head == nullptr)
-            return ;
-        
-        if(head->next == nullptr)
-            return ;
-
-        ListNode* slow = head;
-        ListNode* fast = head;
-
-        while(fast != nullptr && fast->next!=nullptr){
-            slow = slow->next;
-            fast = fast->next->next;
+        ListNode*  fast=head;
+        ListNode* slow=head;
+        //finding mid
+        while(fast->next !=nullptr && fast->next->next !=nullptr){
+            slow=slow->next;
+            fast=fast->next->next;
         }
-
-        slow = reverse(slow);
-
-        ListNode* curr = head;
-        ListNode* curr1 = head->next;
-        while(slow != nullptr && curr1 != nullptr){
-            curr->next = slow;
-            slow = slow->next;
-            curr = curr->next;
-            curr->next=curr1;
-            curr1 = curr1->next;
-            curr = curr->next;
+        ListNode* cur=slow->next;
+        slow->next=nullptr;
+        ListNode* head2=nullptr;
+        //reverse 2nd half
+        while(cur!=nullptr){
+            ListNode* temp=cur->next;
+            cur->next=head2;
+            head2=cur;
+            cur=temp;
         }
-        if(curr1 != nullptr)
-            curr->next = curr1;
+        ListNode* one=head;
+        ListNode* two=head2;
 
-        else if(slow != nullptr)
-            curr->next = slow;
+        ListNode* temp=nullptr;
+        ListNode* temp2=nullptr;
+        while(one !=nullptr && two !=nullptr){
+             temp=one->next;
+            one->next=two;
+           temp2=two->next;
+            two->next=temp;
+            two=temp2;
+            one=temp;
+        }
     }
 
 
