@@ -17,20 +17,31 @@
  */
 class Solution {
 public:
-    ListNode* insertionSortList(ListNode* head) {
-        ListNode* dummy = new ListNode(10);
-        dummy = head;
-        while(dummy != nullptr){
-            ListNode* temp = head;
-            while(temp->val > dummy->val && temp != dummy){
-                swap(dummy->val,temp->val);
-                temp = temp->next;
+    ListNode *insertionSortList(ListNode *head)
+    {
+        ListNode* sortedList = head;
+        head=head->next;
+        sortedList->next = nullptr;
+        while(head !=nullptr){
+            ListNode* head1= head->next;
+            ListNode *prev = nullptr;
+            ListNode *curr = sortedList;
+            while(curr != nullptr && curr->val <= head->val){
+                prev = curr;
+                curr = curr->next;
             }
-            dummy = dummy->next;
+            if(prev){
+                prev->next = head;
+                head->next = curr;
+            }
+            else{
+                sortedList=head;
+                sortedList->next = curr;
+            }
+            head=head1;
         }
 
-        return head;
+        return sortedList;
     }
 };
 // @lc code=end
-
