@@ -32,7 +32,7 @@ public:
     ListNode* merge(ListNode *node, ListNode *node1){
         ListNode* temp = new ListNode(-1);
         ListNode* final = temp;
-        
+
         while(node!=nullptr && node1!=nullptr){
             if(node->val <= node1->val){
                 temp->next = node;
@@ -63,6 +63,7 @@ public:
             
         ListNode* mid = findMid(node);
        
+
         if(mid == nullptr)
             return node;
        
