@@ -17,65 +17,75 @@
  */
 class Solution {
 public:
-    
-    ListNode* findMid(ListNode* head){
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while(slow != nullptr && fast != nullptr && fast->next != nullptr){
-            slow = slow->next;
-            fast = fast->next->next;
-       }
-
-       return slow;
-    }
-    
-    ListNode* merge(ListNode *node, ListNode *node1){
-        ListNode* temp = new ListNode(-1);
-        ListNode* final = temp;
-
-        while(node!=nullptr && node1!=nullptr){
-            if(node->val <= node1->val){
-                temp->next = node;
-                node = node->next;
+    ListNode * mergeList(ListNode * x,ListNode * y){
+        if(x==NULL){
+            return y;
+        }else if(y==NULL){
+            return x;
+        }
+        ListNode * answer = NULL,*temp;
+        ListNode * tem1 = x,*tem2 = y;
+        while(tem1 != NULL && tem2 != NULL){
+            if(tem1->val < tem2->val){
+                if(answer == NULL){
+                    answer = new ListNode (tem1->val);
+                    temp = answer;
+                }else{
+                    temp->next = new ListNode(tem1->val);
+                    temp = temp->next;
+                }
+                tem1 = tem1->next;
+            }else{
+                if(answer == NULL){
+                    answer = new ListNode (tem2->val);
+                    temp = answer;
+                }else{
+                    temp->next = new ListNode(tem2->val);
+                    temp = temp->next;
+                }
+                tem2 = tem2->next;
             }
-            else{
-                temp->next = node1;
-                node1 = node1->next;
-            }
-            temp = temp->next;
-        }
-         while(node!=nullptr){
-            temp->next = node;
-            node=node->next;
-            temp = temp->next;
-        }
-        while(node1!=nullptr){
-            temp->next = node1;
-            node1=node1->next;
-            temp = temp->next;
-        }
-        return final->next;
-    }
-
-    ListNode* mergeList(ListNode* node){
-        if(node == nullptr || node->next == nullptr)
-            return node;
             
-        ListNode* mid = findMid(node);
-       
-
-        if(mid == nullptr)
-            return node;
-       
-        ListNode* right = mid->next;
-        mid->next = nullptr;
-        ListNode *left = mergeList(node);
-        right = mergeList(right);
-        return merge(left,right);
+        }
+        while(tem1 != NULL){
+            if(answer == NULL){
+                    answer = new ListNode (tem1->val);
+                    temp = answer;
+                }else{
+                    temp->next = new ListNode(tem1->val);
+                    temp = temp->next;
+                }
+                tem1 = tem1->next;
+            
+        }
+        while(tem2 != NULL){
+            if(answer == NULL){
+                    answer = new ListNode (tem2->val);
+                    temp = answer;
+            }else{
+                    temp->next = new ListNode(tem2->val);
+                temp = temp->next;
+            }
+                tem2 = tem2->next;
+            
+        }
+        return answer;
     }
-
     ListNode* sortList(ListNode* head) {
-        return mergeList(head);
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+        ListNode * a = head;
+        ListNode * b = head;
+        while(b->next != NULL && b->next->next != NULL){
+            a = a->next;
+            b = b->next->next;
+        }
+        ListNode * x = sortList(a->next);
+        a->next = NULL;
+        ListNode * y = sortList(head);
+        ListNode * answer = mergeList(x,y);
+        return answer;
     }
 };
 // @lc code=end
