@@ -8,7 +8,9 @@
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        
+
+        vector<int> edges[numCourses];
+        for(auto it : prere)
     }
 };
 // @lc code=end
